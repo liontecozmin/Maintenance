@@ -1,14 +1,10 @@
 package com.tfo.maintenance.config;
 
-import java.util.HashMap;
-
-import javax.sql.DataSource;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -17,6 +13,9 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import javax.sql.DataSource;
+import java.util.HashMap;
 
 import static com.ibm.java.diagnostics.utils.Context.logger;
 
@@ -29,28 +28,24 @@ import static com.ibm.java.diagnostics.utils.Context.logger;
  */
 //@Configuration
 @PropertySource({"classpath:persistence-multiple-db-boot.properties"})
-@EnableJpaRepositories(basePackages = "com.tfo.maintenance.dao.alerts", entityManagerFactoryRef = "alertEntityManager", transactionManagerRef = "alertTransactionManager")
+@EnableJpaRepositories(basePackages = "com.tfo.maintenance.dao.links", entityManagerFactoryRef = "linkEntityManager", transactionManagerRef = "linkTransactionManager")
 @Profile("!tc")
-public class AlertsAutoConfig {
+@Slf4j
+public class LinkAutoConfig {
     @Autowired
     private Environment env;
 
-    public AlertsAutoConfig() {
-
+    public LinkAutoConfig() {
         super();
-        logger.info("loaded alerts autoconfig");
     }
 
     //
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean alertEntityManager() {
+    public LocalContainerEntityManagerFactoryBean linkEntityManager() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        logger.info("loaded alerts autoconfig");
-
-        em.setDataSource(alertDataSource());
-        em.setPackagesToScan("com.tfo.maintenance.dao.alerts");
-
+        em.setDataSource(linkDataSource());
+        em.setPackagesToScan("com.tfo.maintenance.dao.links");
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         final HashMap<String, Object> properties = new HashMap<String, Object>();
@@ -62,18 +57,16 @@ public class AlertsAutoConfig {
     }
 
     @Bean
-    @ConfigurationProperties(prefix="spring.datasource")
-    public DataSource alertDataSource() {
-        logger.info("loaded alerts autoconfig");
-
+    @ConfigurationProperties(prefix = "spring.statusdatasource")
+    public DataSource linkDataSource() {
         return DataSourceBuilder.create().build();
     }
 
     @Bean
-    public PlatformTransactionManager alertTransactionManager() {
-        logger.info("loaded alerts autoconfig");
+    public PlatformTransactionManager linkTransactionManager() {
+        logger.info("loaded link autoconfig");
         final JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(alertEntityManager().getObject());
+        transactionManager.setEntityManagerFactory(linkEntityManager().getObject());
         return transactionManager;
     }
 

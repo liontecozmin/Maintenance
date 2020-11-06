@@ -16,7 +16,7 @@ public class CsvFormatter {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("vessels.csv"), "UTF-8"));
             for (VesselStatus vessel : vesselList) {
                 StringBuffer oneLine = new StringBuffer();
-                oneLine.append(vessel.getId());
+//                oneLine.append(vessel.getId());
                 oneLine.append(CSV_SEPARATOR);
 //                oneLine.append(vessel.getVesselName().trim());
 //                oneLine.append(CSV_SEPARATOR);
