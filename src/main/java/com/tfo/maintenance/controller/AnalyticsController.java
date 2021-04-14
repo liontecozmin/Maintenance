@@ -114,7 +114,7 @@ public class AnalyticsController {
     }
 
     @GetMapping("/Analytics/{tenantId1}/{tenantId2}/{startDate}/{endDate}")
-    public void getKpi2(@PathVariable(value = "tenantId1") String tenantId1, @PathVariable(value = "tenantId2") String tenantId2,, @PathVariable(value = "startDate") String startDate, @PathVariable(value = "endDate") String endDate, HttpServletResponse response) throws Exception {
+    public void getKpi2(@PathVariable(value = "tenantId1") String tenantId1, @PathVariable(value = "tenantId2") String tenantId2, @PathVariable(value = "startDate") String startDate, @PathVariable(value = "endDate") String endDate, HttpServletResponse response) throws Exception {
         //set file name and content type
 
         Collection<Analytics> kpiList;
