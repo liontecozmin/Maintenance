@@ -197,7 +197,6 @@ public class AlertsController {
         return ResponseEntity.notFound().build();
     }
 
-    @CrossOrigin
     @GetMapping("/csvreport")
     public ResponseEntity getCsvReport(@RequestParam(value = "tenantId1", required = false) String tenantId1, @RequestParam(value = "tenantId2", required = false) String tenantId2, @RequestParam(value = "dateStart") String startDate, @RequestParam(value = "dateEnd") String endDate, HttpServletResponse response)
             throws ResourceNotFoundException {
@@ -220,6 +219,9 @@ public class AlertsController {
         return ResponseEntity.ok().body(alertsList);
 
     }
+
+
+
 }
 
 

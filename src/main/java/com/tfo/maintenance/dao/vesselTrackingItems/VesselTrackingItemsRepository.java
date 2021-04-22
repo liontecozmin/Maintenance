@@ -1,7 +1,8 @@
-package com.tfo.maintenance.dao.links;
+package com.tfo.maintenance.dao.vesselTrackingItems;
 
 import com.tfo.maintenance.entity.Alerts;
-import com.tfo.maintenance.entity.VesselLink;
+import com.tfo.maintenance.entity.VesselStatus;
+import com.tfo.maintenance.entity.VesselTrackingItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Isolation;
@@ -15,10 +16,10 @@ import java.util.Optional;
 
 @CrossOrigin
 @Transactional(isolation = Isolation.READ_UNCOMMITTED)
-public interface LinkRepository extends JpaRepository<VesselLink, UID> {
+public interface VesselTrackingItemsRepository extends JpaRepository<VesselTrackingItem, UID> {
+    @Query("SELECT a FROM VesselTrackingItem a WHERE a.id like ?1")
+    Optional<VesselTrackingItem> findById(String id);
 
-    @Query("SELECT a FROM VesselLink a WHERE a.trackingItemId like ?1")
-    Optional<VesselLink> findById(String id);
     @Query(value = "SELECT  DISTINCT b.AlertId,\n" +
             "        t.CorrelationId,\n" +
             "        b.imo,\n" +
@@ -42,12 +43,11 @@ public interface LinkRepository extends JpaRepository<VesselLink, UID> {
             ",b.BrokenRules\n" +
             "    FROM [Conpend.Database.Core].dbo.VesselTrackingItem AS v\n" +
             "    WITH (NOLOCK)\n" +
-            "    INNER JOIN [Conpend.Database.Core].dbo.TrackingItem AS t\n" +
+            "    inner JOIN [Conpend.Database.Core].dbo.TrackingItem AS t\n" +
             "    on v.TrackingItemId=t.Id\n" +
-            "    INNER join  [Microsoft.Integration.Trafinas].vesselmonitor.Alert as b\n" +
+            "    inner join  [Microsoft.Integration.Trafinas].vesselmonitor.Alert as b\n" +
             "    on v.Imo=b.IMO and v.TrackingItemId=t.Id\n" +
             "    where CorrelationId is not null\n" +
             "    order by AlertId")
     Collection<Alerts> getBrokenRuleReport(String tenantId1, String tenantId2, Date startDate, Date endDate);
-
 }
