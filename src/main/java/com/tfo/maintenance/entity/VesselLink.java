@@ -22,24 +22,27 @@ public class VesselLink {
     @Column(name = "name")
     @CsvBindByName(column ="VESSELNAME")
     private String vesselName;
+    @Column(name= "createdAt")
+    private String createdAt;
+    @Column(name = "flag")
+    @CsvBindByName(column ="VESSELFLAG")
+    private String vesselFlag;
+    @Column(name = "Imo")
+    @CsvBindByName(column ="IMO")
+    private String imo;
+    @OneToOne(mappedBy = "vesselLink")
+    private VesselStatus vesselStatus;
+    @Column(name="correlationId")
+    private String correlationId;
+    @Column(name="description")
+    private String description;
+    @Column(name="branchId")
+    private String branchId;
+    @Column(name="eventId")
+    private String eventId;
+    @Column(name="tenantId")
+    private String tenantId;
 
-    @Override
-    public String toString() {
-        return "VesselLink{" +
-//                ", vesselName='" + vesselName + '\'' +
-//                ", vesselFlag='" + vesselFlag + '\'' +
-//                ", imo='" + imo + '\'' +
-                '}';
-    }
-
-//    public String getTrackingItemId() {
-//        return trackingItemId;
-//    }
-//
-//    public void setTrackingItemId(String trackingItemId) {
-//        this.trackingItemId = trackingItemId;
-//    }
-//
     public String getVesselName() {
         return vesselName;
     }
@@ -72,14 +75,24 @@ public class VesselLink {
 //        this.vesselStatus = vesselStatus;
 //    }
 
-    @Column(name = "flag")
-    @CsvBindByName(column ="VESSELFLAG")
-    private String vesselFlag;
-    @Column(name = "Imo")
-    @CsvBindByName(column ="IMO")
-    private String imo;
-    @OneToOne(mappedBy = "vesselLink")
-    private VesselStatus vesselStatus;
+
+    @Override
+    public String toString()
+    {
+        return "VesselLink{" +
+                "trackingItemId='" + trackingItemId + '\'' +
+                ", vesselName='" + vesselName + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", vesselFlag='" + vesselFlag + '\'' +
+                ", imo='" + imo + '\'' +
+                ", vesselStatus=" + vesselStatus +
+                ", correlationId='" + correlationId + '\'' +
+                ", description='" + description + '\'' +
+                ", branchId='" + branchId + '\'' +
+                ", eventId='" + eventId + '\'' +
+                ", tenantId='" + tenantId + '\'' +
+                '}';
+    }
 
 
 }

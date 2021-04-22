@@ -39,12 +39,11 @@ public interface LinkRepository extends JpaRepository<VesselLink, UID> {
             ",v.BeneficialOwner\n" +
             ",v.Flag\n" +
             ",v.LastMovementDate\n" +
-            ",b.BrokenRules\n" +
-            "    FROM [Conpend.Database.Core].dbo.VesselTrackingItem AS v\n" +
-            "    WITH (NOLOCK)\n" +
-            "    INNER JOIN [Conpend.Database.Core].dbo.TrackingItem AS t\n" +
+            ",b.BrokenRules " +
+            "    FROM VesselLink AS v\n" +
+            "    INNER JOIN Conpend.Database.Core.dbo.TrackingItem AS t\n" +
             "    on v.TrackingItemId=t.Id\n" +
-            "    INNER join  [Microsoft.Integration.Trafinas].vesselmonitor.Alert as b\n" +
+            "    INNER join Microsoft.Integration.Trafinas.vesselmonitor.Alert as b\n" +
             "    on v.Imo=b.IMO and v.TrackingItemId=t.Id\n" +
             "    where CorrelationId is not null\n" +
             "    order by AlertId")

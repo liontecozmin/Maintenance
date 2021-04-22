@@ -14,8 +14,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
 
-import static com.ibm.java.diagnostics.utils.Context.logger;
-
 @CrossOrigin
 @Transactional(isolation = Isolation.READ_UNCOMMITTED)
 public interface VesselStatusRepository extends JpaRepository<VesselStatus, UID> {

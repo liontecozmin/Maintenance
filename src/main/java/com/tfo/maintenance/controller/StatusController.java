@@ -31,8 +31,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static com.ibm.java.diagnostics.utils.Context.logger;
-import static com.ibm.jvm.dtfjview.Version.getName;
 
 @RestController
 @RequestMapping("/api/v1")
